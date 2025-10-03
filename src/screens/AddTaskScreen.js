@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Button, KeyboardAvoidingView, Platform, View } from 'react-native';
 import useTaskStore from '../store/taskStore';
 import styled, { useTheme } from 'styled-components/native';
-import GlassCard from '../components/GlassCard';
+import Card from '../components/Card';
 
 const AddTaskScreen = ({ navigation }) => {
   const theme = useTheme();
@@ -18,7 +18,7 @@ const AddTaskScreen = ({ navigation }) => {
 
   return (
     <Container behavior={Platform.OS === "ios" ? "padding" : "height"}>
-      <GlassCard style={{ width: '85%' }}>
+      <Card style={{ width: '85%' }}>
         <ModalContent>
           <ModalText>New Task</ModalText>
           <Input
@@ -33,7 +33,7 @@ const AddTaskScreen = ({ navigation }) => {
             <Button title="Add Task" onPress={handleAddTask} color={theme.button} />
           </ButtonContainer>
         </ModalContent>
-      </GlassCard>
+      </Card>
     </Container>
   );
 };
@@ -42,7 +42,7 @@ const Container = styled(KeyboardAvoidingView)`
   flex: 1;
   justify-content: center;
   align-items: center;
-  background-color: rgba(0,0,0,0.5);
+  background-color: ${props => props.theme.background};
 `;
 
 const ModalContent = styled.View`
@@ -68,7 +68,7 @@ const Input = styled.TextInput`
   padding-horizontal: 15px;
   font-size: 16px;
   color: ${props => props.theme.text};
-  background-color: rgba(255,255,255,0.1);
+  background-color: ${props => props.theme.card};
 `;
 
 const ButtonContainer = styled.View`
