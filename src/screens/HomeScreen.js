@@ -1,7 +1,7 @@
 import React from 'react';
 import { FlatList, Button, SafeAreaView, TouchableOpacity } from 'react-native';
 import useTaskStore from '../store/taskStore';
-import GlassCard from '../components/GlassCard';
+import Card from '../components/Card';
 import styled, { useTheme } from 'styled-components/native';
 
 const HomeScreen = ({ navigation }) => {
@@ -9,7 +9,7 @@ const HomeScreen = ({ navigation }) => {
   const { tasks, toggleTask, deleteTask } = useTaskStore();
 
   const renderItem = ({ item }) => (
-    <GlassCard style={{ marginBottom: 10 }}>
+    <Card>
         <TaskContent>
             <TaskTouchable onPress={() => navigation.navigate('EditTask', { taskId: item.id, currentTitle: item.title })}>
                 <TaskTitle completed={item.completed}>{item.title}</TaskTitle>
@@ -21,45 +21,39 @@ const HomeScreen = ({ navigation }) => {
                 <DeleteButtonText>✕</DeleteButtonText>
             </DeleteButton>
         </TaskContent>
-    </GlassCard>
+    </Card>
   );
 
   return (
-    <Background source={{ uri: 'https://images.unsplash.com/photo-1528459801416-a9e53bbf4e17?q=80&w=2512&auto=format&fit=crop' }}>
-      <Container>
-        <Header>
-          <HeaderTitle>Today's Tasks</HeaderTitle>
-          <Button
-            title="Settings"
-            onPress={() => navigation.navigate('Settings')}
-            color={theme.buttonText}
-          />
-        </Header>
-        <FlatList
-          data={tasks}
-          renderItem={renderItem}
-          keyExtractor={(item) => item.id}
-          contentContainerStyle={{ paddingHorizontal: 20, paddingTop: 10 }}
+    <Container>
+      <Header>
+        <HeaderTitle>Today's Tasks</HeaderTitle>
+        <Button
+          title="Settings"
+          onPress={() => navigation.navigate('Settings')}
+          color={theme.buttonText}
         />
-        <AddButtonContainer>
-          <Button
-            title="Add New Task"
-            onPress={() => navigation.navigate('AddTask')}
-            color={theme.buttonText}
-          />
-        </AddButtonContainer>
-      </Container>
-    </Background>
+      </Header>
+      <FlatList
+        data={tasks}
+        renderItem={renderItem}
+        keyExtractor={(item) => item.id}
+        contentContainerStyle={{ paddingHorizontal: 20, paddingTop: 10 }}
+      />
+      <AddButtonContainer>
+        <Button
+          title="Add New Task"
+          onPress={() => navigation.navigate('AddTask')}
+          color={theme.buttonText}
+        />
+      </AddButtonContainer>
+    </Container>
   );
 };
 
-const Background = styled.ImageBackground`
-  flex: 1;
-`;
-
 const Container = styled(SafeAreaView)`
   flex: 1;
-  background-color: ${props => props.theme.overlay};
+  background-color: ${props => props.theme.background};
 `;
 
 const Header = styled.View`
@@ -76,7 +70,6 @@ const HeaderTitle = styled.Text`
 `;
 
 const TaskContent = styled.View`
-  padding: 15px 20px;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
@@ -115,7 +108,6 @@ const DeleteButtonText = styled.Text`
 
 const AddButtonContainer = styled.View`
   padding: 20px;
-  background-color: ${props => props.theme.overlay};
 `;
 
 export default HomeScreen;
